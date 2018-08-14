@@ -48,9 +48,9 @@ public class RegisterController  extends HttpServlet{
 						request.setAttribute("msg","Password and Confirm Password doesn't match");
 						rd.forward(request, response);
 					}else{
-						st.executeUpdate("insert into user values('"+user.getName()+"','"+user.getGender()+"','"+user.getDob()+"','"+user.getEmail()+"','"+user.getPassword()+"')");
+						st.executeUpdate("insert into user values('"+user.getName()+"','"+user.getEmail()+"','"+user.getPassword()+"','"+user.getGender()+"','"+user.getDob()+"')");
 						rd=request.getRequestDispatcher("login.jsp");
-						request.setAttribute("msg","Registered Successfully.sYou can login now!");
+						request.setAttribute("msg","Registered Successfully. You can login now!");
 						rd.forward(request, response);
 					}
 				}

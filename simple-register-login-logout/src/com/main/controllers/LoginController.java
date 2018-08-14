@@ -8,6 +8,7 @@ import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.main.entity.User;
 import com.main.util.JConnect;
 
-@WebServlet("loginController")
+@WebServlet("/loginController")
 public class LoginController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -35,6 +36,11 @@ public class LoginController extends HttpServlet{
 				user.setEmail(rs.getString("email"));
 				user.setDob(rs.getString("dob"));
 				user.setGender(rs.getString("gender"));
+				
+				Cookie loginCookie=new Cookie("id",user.getEmail());
+				loginCookie.setMaxAge(30*60);
+				response.addCookie(loginCookie);
+				response.sendRedirect("profile.jsp");
 				
 			}
 			else{

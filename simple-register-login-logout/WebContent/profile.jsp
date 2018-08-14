@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ page import="java.sql.*,com.main.util.*" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,6 +12,36 @@
 		<div class="box">
 		<h1 style="text-align:center; color:#8B008B;">User Logged In</h1>
 			<div class="sub">
+				<% 
+					String id=null;
+					String name=null;
+					String email=null;
+					String gender=null;
+					String dob=null;
+					
+					Cookie[] cookies=request.getCookies();
+					for(Cookie cookie:cookies){
+						if(cookie.getName().equals("id")){
+							id=cookie.getValue();
+						}
+					}
+					if(id!=null){
+					Statement st=JConnect.getStatement();
+					ResultSet rs=st.executeQuery("select * from user where email='"+id+"'");
+					if(rs.next()){
+						name=rs.getString("name");
+						email=rs.getString("email");
+						gender=rs.getString("gender");
+						dob=rs.getString("dob");
+					}
+					}else{
+						response.sendRedirect("login.jsp");
+					}
+				%>
+				<h5><%=name%></h5>
+				<h5><%=email%></h5>
+				<h5<%=gender%>></h5>
+				<h5><%=dob%></h5>
 				<a href="logout">LOGOUT</a>
 			</div>
 		</div>
